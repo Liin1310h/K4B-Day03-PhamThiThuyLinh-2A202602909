@@ -1,0 +1,37 @@
+[
+  {
+    "id": "TC01",
+    "type": "direct_query",
+    "question": "Bạn có thể giải thích quy trình kiểm định chất lượng và lỗi gán nhãn 2D/3D là gì không?",
+    "expected_behavior": "Agent trả lời trực tiếp từ System Prompt, không cần gọi bất kỳ Tool nào.",
+    "complexity": "Low"
+  },
+  {
+    "id": "TC02",
+    "type": "single_tool_query",
+    "question": "Hãy tra cứu thông tin ca kiểm định QC2026001.",
+    "expected_behavior": "Agent nhận diện nhu cầu tra cứu ca kiểm định và tự động phát sinh Tool Call 'qc_query' với case_id là QC2026001.",
+    "complexity": "Medium"
+  },
+  {
+    "id": "TC03",
+    "type": "rework_creation",
+    "question": "Hãy tạo phiếu Rework cho ca kiểm định QC2026001 với lý do sai vị trí gán nhãn 2D và mức ưu tiên HIGH.",
+    "expected_behavior": "Agent nhận diện yêu cầu tạo phiếu Rework và phát sinh Tool Call 'create_rework_ticket' với đúng case_id, reason và priority.",
+    "complexity": "Medium"
+  },
+  {
+    "id": "TC04",
+    "type": "multi_step_reasoning",
+    "question": "Hãy kiểm tra ca QC2026001. Nếu ca này không đạt kiểm định thì tạo phiếu Rework với mức ưu tiên phù hợp dựa trên mức độ lỗi.",
+    "expected_behavior": "Agent thực hiện chuỗi suy luận ReAct: đầu tiên gọi 'qc_query' để kiểm tra ca QC2026001, phân tích kết quả QC và mức độ lỗi, sau đó nếu kết quả là FAIL thì gọi 'create_rework_ticket' với mức ưu tiên phù hợp.",
+    "complexity": "High"
+  },
+  {
+    "id": "TC05",
+    "type": "edge_case_handling",
+    "question": "Hãy tra cứu thông tin ca kiểm định QC9999999.",
+    "expected_behavior": "Agent gọi Tool 'qc_query', nhận kết quả NOT_FOUND và đưa ra phản hồi chính xác, lịch sự, không tự bịa đặt thông tin về ca kiểm định.",
+    "complexity": "Medium"
+  }
+]
