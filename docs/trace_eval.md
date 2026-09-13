@@ -23,41 +23,68 @@
 >
 
 ```
-[{
+[
+  {
+    {
 
-    "step": 1,
-    "query": "Hãy kiểm tra ca QC2026001. Nếu ca này không đạt kiểm định thì tạo phiếu Rework với mức ưu tiên phù hợp dựa trên mức độ lỗi.",
-    "action_type": "TOOL_EXECUTION",
-    "tool_name": "qc_query",
-    "arguments": {
-      "case_id": "QC2026001"
+      "step": 1,
+      "query": "Hãy kiểm tra ca QC2026001. Nếu ca này không đạt kiểm định thì tạo phiếu Rework với mức ưu tiên phù hợp dựa trên mức độ lỗi.",
+      "action_type": "TOOL_EXECUTION",
+      "tool_name": "qc_query",
+      "arguments": {
+        "case_id": "QC2026001"
+      },
+      "observation": {
+        "status": "SUCCESS",
+        "case_id": "QC2026001",
+        "data": {
+          "error_type": "Sai vị trí gán nhãn",
+          "severity": "HIGH",
+          "qc_result": "FAIL"
+        }
+      },
+      "latency_ms": 980.81
+
     },
-    "observation": {
-      "status": "SUCCESS",
+    {
+      "step": 2,
+      "action_type": "TOOL_EXECUTION",
+      "tool_name": "create_rework_ticket",
+      "arguments": {
       "case_id": "QC2026001",
-      "data": {
-        "error_type": "Sai vị trí gán nhãn",
-        "severity": "HIGH",
-        "qc_result": "FAIL"
-      }
-    },
-    "latency_ms": 980.81
-
+      "reason": "Sai vị trí gán nhãn",
+      "priority": "HIGH"
+      },
+      "observation": {
+      "status": "SUCCESS",
+      "ticket_id": "RW-QC2026001-01"
+      },
+      "latency_ms": 1012.06
+    }
   },
   {
-    "step": 2,
-    "action_type": "TOOL_EXECUTION",
-    "tool_name": "create_rework_ticket",
-    "arguments": {
-    "case_id": "QC2026001",
-    "reason": "Sai vị trí gán nhãn",
-    "priority": "HIGH"
+    {
+      "step": 1,
+      "query": "Hãy tra cứu thông tin ca kiểm định QC9999999.",
+      "action_type": "TOOL_EXECUTION",
+      "tool_name": "qc_query",
+      "arguments": {
+        "case_id": "QC9999999"
     },
     "observation": {
-    "status": "SUCCESS",
-    "ticket_id": "RW-QC2026001-01"
+      "status": "NOT_FOUND",
+      "message": "Không tìm thấy dữ liệu ca kiểm định có mã 'QC9999999'"
     },
-    "latency_ms": 1012.06
+    "latency_ms": 1118.76
+    },
+    {
+      "step": 2,
+      "query": "Hãy tra cứu thông tin ca kiểm định QC9999999.",
+      "action_type": "FINAL_ANSWER",
+      "thought": "Tool trả về lỗi hoặc không tìm thấy dữ liệu.",
+      "output": "Không tìm thấy dữ liệu ca kiểm định có mã 'QC9999999'",
+      "latency_ms": 10.0
+    }
   }
 ]
 ```
